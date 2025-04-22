@@ -1,0 +1,77 @@
+{% load static %}
+{% include 'views/header.html' %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {% block register %}
+        <section class="h-100 h-custom" style="background-color: #8fc4b7;">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-lg-8 col-xl-6">
+                <div class="card rounded-3">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img3.webp"
+                    class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
+                    alt="Sample photo">
+                  <div class="card-body p-4 p-md-5">
+                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Login</h3>
+        
+                    <form class="px-md-2" method = 'POST' action = ''>
+                      {% csrf_token %}
+        
+                      <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" name = 'username' id="form3Example1q" class="form-control" />
+                        <label class="form-label" for="form3Example1q">User Name</label>
+                        
+                      </div>
+        
+                      <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" name = 'password' id="form3Example1q" class="form-control" />
+                        <label class="form-label" for="form3Example1q">Password</label>
+                      
+                      </div>
+        
+                        
+        
+                      <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success btn-lg mb-1">Submit</button>
+                      
+                    </form>
+                    <p class="text-center text-muted mt-5 mb-0">You don't have an account? <a href = {% url "register" %} ><u>Register here</u></a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {% comment %} <form method = "POST" action ="">  <!-- l?y form có s?n t? django sang -->
+            {% csrf_token %} <!-- fix l?i b?o m?t form -->
+                {{form.username}}<!--s?a l?i ð?nh dang thành paragraph-->
+                    <input type="submit" name="Create user"/>
+        </form>  {% endcomment %}
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <script src="" async defer></script>
+        {% endblock register %}
+    </body>
+</html>
+<!-- type="" xác định trường nhập người dùng sẽ nhập -->
+<!-- id phải trùng với label bằng thuộc tính for, tăng khả năng truy cập -->
+<!-- required: Thuộc tính này bắt buộc người dùng phải nhập mật khẩu trước khi gửi biểu mẫu.
+Nếu người dùng không nhập, trình duyệt sẽ hiển thị thông báo yêu cầu nhập. -->
+<!-- Thẻ <label> trong HTML được dùng để tạo nhãn cho các phần tử nhập liệu 
+    (input) trong biểu mẫu. Nó giúp cải thiện khả năng sử dụng và truy cập
+    bằng cách liên kết trực tiếp với một trường nhập, 
+    cho phép người dùng nhấp vào nhãn để kích hoạt trường nhập tương ứng. -->
