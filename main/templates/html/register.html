@@ -1,91 +1,217 @@
 {% load static %}
-{% include 'views/header.html' %}
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-      <section class="vh-100 bg-image"
-  style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
-  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-    <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card" style="border-radius: 15px;">
-            <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng Ký</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-color: #ffffff;
+        --text-color: #000000;
+        --card-bg: #ffffff;
+        --input-bg: #f8f9fa;
+        --primary: #2575fc;
+        --primary-hover: #1a5edc;
+      }
 
-              <form method = 'POST' action = ''>
-                {% csrf_token %}
 
-                <div data-mdb-input-init class="form-outline mb-4">
-                  <label class="form-label" for="form3Example1cg">Your Name</label>
-                  {{form.username}}
-                </div>
+      body.dark-mode {
+        --bg-color: #1e1e2f;
+        --text-color: #ffffff;
+        --card-bg: #2c2c3e;
+        --input-bg: #3a3a4d;
+      }
 
-                <div data-mdb-input-init class="form-outline mb-4">
-                  <label class="form-label" for="form3Example3cg">Your Email</label>
-                  {{form.email}}
-                </div>
 
-                <div data-mdb-input-init class="form-outline mb-4">
-                  <label class="form-label" for="form3Example3cg">First Name</label>
-                  {{form.first_name}}
-                </div>
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Segoe UI", sans-serif;
+        transition: background-color 0.4s ease, color 0.4s ease;
+        position: relative;
+      }
 
-                <div data-mdb-input-init class="form-outline mb-4">
-                  <label class="form-label" for="form3Example3cg">Last Name</label>
-                  {{form.last_name}}
-                </div>
 
-                <div data-mdb-input-init class="form-outline mb-4">
-                  <label class="form-label" for="form3Example4cg">Password</label>
-                  {{form.password1}}
-                </div>
+      .login-card {
+        background-color: var(--card-bg);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+        transition: background-color 0.4s ease;
+      }
 
-                <div data-mdb-input-init class="form-outline mb-4">
-                  
-                  <label class="form-label" for="form3Example4cdg">Repeat your password</label>
-                  {{form.password2}}
-                </div>
 
-                <div class="d-flex justify-content-center">
-                  <button  type="submit" data-mdb-button-init
-                    data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
-                </div>
+      .form-control {
+        border-radius: 10px;
+        background-color: var(--input-bg);
+        color: var(--text-color);
+        border: 1px solid #ccc;
+        transition: background-color 0.4s ease, color 0.4s ease;
+      }
 
-                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href = {% url "login" %} ><u>Login here</u></a></p>
 
-              </form>
+      .form-control::placeholder {
+        color: #888;
+      }
 
-            </div>
-          </div>
+
+      .btn-primary {
+        border-radius: 10px;
+        background-color: var(--primary);
+        border: none;
+      }
+
+
+      .btn-primary:hover {
+        background-color: var(--primary-hover);
+      }
+
+
+      .mode-toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: transparent;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--text-color);
+        transition: color 0.3s ease;
+      }
+
+
+      .text-muted {
+        font-size: 0.9rem;
+      }
+
+
+      .icon-sun,
+      .icon-moon {
+        display: none;
+        transition: opacity 0.3s ease;
+      }
+
+
+      .light-mode .icon-sun {
+        display: inline;
+      }
+
+
+      .dark-mode .icon-moon {
+        display: inline;
+      }
+    </style>
+  </head>
+  <body class="light-mode">
+    <button
+      class="mode-toggle"
+      onclick="toggleMode()"
+      aria-label="Chuyển chế độ sáng/tối"
+    >
+      <span class="icon-sun">☀️</span>
+      <span class="icon-moon">🌙</span>
+    </button>
+
+    {% block register %}
+    <div class="login-card">
+      <h3 class="text-center mb-4">Đăng Nhập</h3>
+      <form method="POST" action="">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label">Tên đăng nhập</label>
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+          />
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-        {% block register %}
-        {% comment %} <form method = "POST" action ="">  <!-- lấy form có sẵn từ django sang -->
-            {% csrf_token %} <!-- fix lỗi bảo mật form -->
-                {{form.username}}<!--sửa lại định dang thành paragraph-->
-                    <input type="submit" name="Create user"/>
-        </form>  {% endcomment %}
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="email"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Họ</label>
+          <input
+            type="text"
+            class="form-control"
+            name="first_name"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Tên</label>
+          <input
+            type="text"
+            class="form-control"
+            name="last_name"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Mật khẩu</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password1"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Nhập lại mật khẩu</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password2"
+          />
+        </div>
+
+
         
-        <script src="" async defer></script>
-        {% endblock register %}
-    </body>
+        <button type="submit" class="btn btn-primary w-100">Đăng Ký</button>
+        <a href="{% url 'login' %}" class="btn btn-primary w-100" style="margin-top: 10px; height: 36px">Đăng nhập</a>
+      </form>
+      </p>
+    </div>
+    {% endblock register %}
+
+
+    <script>
+      function toggleMode() {
+        const body = document.body;
+        const isDark = body.classList.contains("dark-mode");
+        body.classList.toggle("dark-mode");
+        body.classList.toggle("light-mode");
+        localStorage.setItem("mode", isDark ? "light" : "dark");
+      }
+
+
+      window.onload = () => {
+        const savedMode = localStorage.getItem("mode");
+        if (savedMode === "dark") {
+          document.body.classList.add("dark-mode");
+          document.body.classList.remove("light-mode");
+        } else {
+          document.body.classList.add("light-mode");
+        }
+      };
+    </script>
+  </body>
 </html>

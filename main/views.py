@@ -31,12 +31,15 @@ def ielts(request):
     return render(request, 'html/ietls/ielts.html')
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     form = CreateUserForm
-    context = {'form':form}
+    
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+    context = {'form':form}
     return render(request, 'html/register.html', context)
 
 def loginPage(request):
@@ -46,9 +49,11 @@ def loginPage(request):
         username  = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username = username, password = password) 
+        print(user)  # kiểm tra xem user có tồn tại không
         # kiểm tra xem user có tồn tại không
         if user is not None:
             login(request, user)
+            print('Login successfully')
             return redirect('home')
         else: messages.info(request,'Username or password is incorrect')
     form = UserCreationForm()

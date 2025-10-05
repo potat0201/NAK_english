@@ -166,6 +166,9 @@ h1 {
 .card-body {
   background-color: #fff;
 }
+.card-title {
+  margin-top: 0px;
+}
 /* footer */
 .footer {
   background: #1f1f28;
